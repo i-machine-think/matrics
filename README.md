@@ -1,6 +1,6 @@
 # matrics - Machine Metrics
 
-A library of common NLP metrics.
+A library of common NLP / compositionality metrics.
 
 
 @TODO: 
