@@ -10,7 +10,8 @@ A library of common NLP / compositionality metrics.
 - [ ] Message distinctness
 - [ ] Perplexity
 - [ ] Jaccard Similarity
-- [ ] niform and unigram chimeras
+- [ ] Uniform and unigram chimeras
 - [ ] Language Entropy
 - [ ] TRE
 - [ ] Pseudo-TRE
+- [ ] Language Comparaison (edit distance / perfect message matches)
