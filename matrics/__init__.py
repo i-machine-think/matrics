@@ -1,1 +1,3 @@
 from .rsa import representation_similarity_analysis
+from .message_distance import message_distance
+from .compositionality_metrics import compositionality_metrics
