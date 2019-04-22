@@ -3,12 +3,7 @@ import scipy.spatial
 import scipy.stats
 
 
-def representation_similarity_analysis(
-    inputs,
-    hidden_S,
-    hidden_R,
-    samples=5000,
-):
+def representation_similarity_analysis(inputs, hidden_S, hidden_R, samples=5000):
     """
     Calculates RSA scores of two agents (ρS/R), and of each agent with the
     input (ρS/I and ρR/I), where S refers to Sender,R to Receiver,I to input.
@@ -32,13 +27,9 @@ def representation_similarity_analysis(
         rnd = np.random.choice(len(test_metadata), 2, replace=False)
         s1, s2 = rnd[0], rnd[1]
 
-        sim_hidden_S[i] = scipy.spatial.distance.cosine(
-            inputs[s1], inputs[s2])
-        sim_hidden_S[i] = scipy.spatial.distance.cosine(
-            hidden_S[s1], hidden_S[s2])
-        sim_hidden_R[i] = scipy.spatial.distance.cosine(
-            hidden_R[s1], hidden_R[s2]
-        )
+        sim_hidden_S[i] = scipy.spatial.distance.cosine(inputs[s1], inputs[s2])
+        sim_hidden_S[i] = scipy.spatial.distance.cosine(hidden_S[s1], hidden_S[s2])
+        sim_hidden_R[i] = scipy.spatial.distance.cosine(hidden_R[s1], hidden_R[s2])
 
     rsa_sr = scipy.stats.pearsonr(sim_hidden_S, sim_hidden_R)[0]
     rsa_si = scipy.stats.pearsonr(sim_hidden_S, sim_image_features)[0]

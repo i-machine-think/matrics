@@ -2,6 +2,9 @@ import numpy as np
 import scipy.spatial
 import scipy.stats
 
+# The functions in this file are used to measure the level of compositionality
+# So far this is implemented by a TRE proxy and topological similarity
+
 
 def compositionality_metrics(compositional_representation, messages, samples=5000):
     """
