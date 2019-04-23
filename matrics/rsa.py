@@ -27,12 +27,12 @@ def representation_similarity_analysis(inputs, hidden_S, hidden_R, samples=5000)
         rnd = np.random.choice(len(inputs), 2, replace=False)
         s1, s2 = rnd[0], rnd[1]
 
-        sim_hidden_S[i] = scipy.spatial.distance.cosine(inputs[s1], inputs[s2])
+        sim_input_features[i] = scipy.spatial.distance.cosine(inputs[s1], inputs[s2])
         sim_hidden_S[i] = scipy.spatial.distance.cosine(hidden_S[s1], hidden_S[s2])
         sim_hidden_R[i] = scipy.spatial.distance.cosine(hidden_R[s1], hidden_R[s2])
 
     rsa_sr = scipy.stats.pearsonr(sim_hidden_S, sim_hidden_R)[0]
-    rsa_si = scipy.stats.pearsonr(sim_hidden_S, sim_image_features)[0]
-    rsa_ri = scipy.stats.pearsonr(sim_hidden_R, sim_image_features)[0]
+    rsa_si = scipy.stats.pearsonr(sim_hidden_S, sim_input_features)[0]
+    rsa_ri = scipy.stats.pearsonr(sim_hidden_R, sim_input_features)[0]
 
     return (rsa_sr, rsa_si, rsa_ri)
