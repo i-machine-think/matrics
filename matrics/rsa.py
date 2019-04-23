@@ -24,7 +24,7 @@ def representation_similarity_analysis(inputs, hidden_S, hidden_R, samples=5000)
     sim_hidden_R = np.zeros(samples)
 
     for i in range(samples):
-        rnd = np.random.choice(len(test_metadata), 2, replace=False)
+        rnd = np.random.choice(len(inputs), 2, replace=False)
         s1, s2 = rnd[0], rnd[1]
 
         sim_hidden_S[i] = scipy.spatial.distance.cosine(inputs[s1], inputs[s2])
