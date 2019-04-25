@@ -55,11 +55,40 @@ def jaccard_similarity(messages):
     combinations = list(itertools.combinations(range(A), 2))
     score = 0.0
     for c in combinations:
-        score += jaccard_similarity_score(
-            encoded_messages[:, c[0], :], encoded_messages[:, c[1], :]
-        )
+        score += jaccard_similarity_score(messages[:, c[0], :], messages[:, c[1], :])
 
     # average over number of combinations
     score /= len(combinations)
+
+    return score
+
+
+def kl_divergence(messages, eps=1e-6):
+    """
+    Calculates average KL divergence between all pairs of agents.
+    Args:
+        messages (ndarray, ints): N messages of length L from A agents, shape: N*A*L
+    Returns:
+        score (float): average pair-wise KL divergence
+    """
+    N, A = messages.shape[0], messages.shape[1]
+
+    vocab_size = messages.max() + 1
+
+    score = 0.0
+    count = 1
+    for i in range(A):
+        for j in range(A):
+            if j == i:
+                continue
+            else:
+                # this is unnefficient - unfortunately bincount and entropy do not acce
+                for m in range(N):
+                    dist1 = np.bincount(messages[m, i, :], minlength=vocab_size) + eps
+                    dist2 = np.bincount(messages[m, j, :], minlength=vocab_size) + eps
+                    score += scipy.stats.entropy(dist1, dist2)
+                    count += 1
+    # average over number of combinations
+    score /= count
 
     return score
