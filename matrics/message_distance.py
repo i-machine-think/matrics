@@ -1,6 +1,8 @@
 import itertools
 import numpy as np
-from sklearn.metrics import jaccard_similarity_score
+import scipy.spatial
+import scipy.stats
+from sklearn.metrics import jaccard_score
 from .utils import one_hot
 
 # The functions in this file are used to compare different languages with each other
@@ -43,11 +45,16 @@ def message_distance(messages):
     return (tot_dist, perfect_matches)
 
 
-def jaccard_similarity(messages):
+def jaccard_similarity(messages, average="macro"):
     """
     Calculates average jaccard similarity between all pairs of agents.
     Args:
         messages (ndarray, ints): N messages of length L from A agents, shape: N*A*L
+        average {'macro', 'micro'}:     
+            'micro': Calculate metrics globally by counting the total true positives, 
+                    false negatives and false positives.
+            'macro': Calculate metrics for each label, and find their unweighted mean. 
+                    This does not take label imbalance into account.
     Returns:
         score (float): average jaccard similarity between all pairs of agents.
     """
@@ -55,7 +62,9 @@ def jaccard_similarity(messages):
     combinations = list(itertools.combinations(range(A), 2))
     score = 0.0
     for c in combinations:
-        score += jaccard_similarity_score(messages[:, c[0], :], messages[:, c[1], :])
+        score += jaccard_score(
+            messages[:, c[0], :], messages[:, c[1], :], average=average
+        )
 
     # average over number of combinations
     score /= len(combinations)
